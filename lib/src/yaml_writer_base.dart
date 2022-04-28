@@ -84,18 +84,20 @@ class YAMLWriter extends Converter<Object?, String> {
 
       return true;
     } else {
-      if (!node.contains("'")) {
-        s.write("'");
-        s.write(node);
-        s.write("'");
-        return false;
-      } else {
-        var str = node.replaceAll('\\', '\\\\').replaceAll('"', '\\"');
-        s.write('"');
-        s.write(str);
-        s.write('"');
-        return false;
-      }
+      s.write(node);
+      return false;
+      // if (!node.contains("'")) {
+      //   // s.write("'");
+      //   s.write(node);
+      //   // s.write("'");
+      //   return false;
+      // } else {
+      //   // var str = node.replaceAll('\\', '\\\\').replaceAll('"', '\\"');
+      //   // s.write('"');
+      //   s.write(node);
+      //   // s.write('"');
+      //   return false;
+      // }
     }
   }
 
@@ -118,6 +120,10 @@ class YAMLWriter extends Converter<Object?, String> {
 
     for (var item in node) {
       s.write(currentIdent);
+      if(item is String && item.startsWith('#')) {
+        s.write('#');
+        item = item.replaceFirst('#', '');
+      }
       s.write('- ');
       var ln = _writeTo(item, s, currentIdent: nextIdent);
       if (!ln) {

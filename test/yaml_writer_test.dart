@@ -7,6 +7,15 @@ void main() {
       print('---------------------------------------------');
     });
 
+    test('String', (){
+      final yamlWriter = YAMLWriter();
+      final tree = {
+        'name': 'name'
+      };
+      final yaml = yamlWriter.write(tree);
+      expect(yaml, """name: 'name'""");
+    });
+
     test('list', () {
       var yamlWriter = YAMLWriter();
 
